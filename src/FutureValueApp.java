@@ -1,52 +1,46 @@
-import java.text.NumberFormat;
 import java.util.Scanner;
+import java.text.NumberFormat;
+
 public class FutureValueApp {
+
     public static void main(String[] args) {
-        System.out.println("Welcome to the Future Value App\n");
-        Scanner sc=new Scanner(System.in);
-        String choice="y";
-        while (choice.equalsIgnoreCase("y")){
-            //get the input from the user
-            System.out.print("Enter monthly investment: ");
-            double monthlyInvestment =sc.nextDouble();
-            System.out.print("Enter yearly investment rate: ");
-            double interestRate =sc.nextDouble();
-            System.out.print("Enter number of years: ");
-            int years=sc.nextInt();
+        System.out.println("The Future Value Calculator\n");
 
-            //convert yearly values to monthly values
-            double monthlyInterestRate=interestRate/12/100;
-            int months=years/12;
+        @SuppressWarnings("resource")
+        Scanner sc = new Scanner(System.in);
+        String choice = "y";
+        while (choice.equalsIgnoreCase("y")) {
+            // get the input from the user
+            System.out.print("Enter monthly investment:   ");
+            double monthlyInvestment = sc.nextDouble();
+            System.out.print("Enter yearly interest rate: ");
+            double interestRate = sc.nextDouble();
+            System.out.print("Enter number of years:      ");
+            int years = sc.nextInt();
 
-            //call future value method
+            // convert yearly values to monthly values
+            double monthlyInterestRate = interestRate / 12 / 100;
+            int months = years * 12;
 
-            double futureValue =calaulateFutureValue(monthlyInvestment,monthlyInterestRate,months);
+            // use a for loop to calculate the future value
+            double futureValue = 0.0;
+            for (int i = 1; i <= months; i++) {
+                futureValue = (futureValue + monthlyInvestment) *
+                        (1 + monthlyInterestRate);
+                System.out.println("Month " + i + ": " + futureValue);
+            }
 
-            //format and display the result
-
+            // format the result and display it to the user
             NumberFormat currency = NumberFormat.getCurrencyInstance();
-            System.out.println("Future value:  "+
-            currency.format(futureValue));
+            System.out.println("Future value:               "
+                    + currency.format(futureValue));
             System.out.println();
 
-            //see if the user wants to continue
+            // see if the user wants to continue
             System.out.print("Continue? (y/n): ");
-            choice=sc.next();
-
+            choice = sc.next();
             System.out.println();
-
-
         }
-    }
-
-    //static method that requires three arguments and return a double
-    public static double calaulateFutureValue(double monthlyInvestment,
-                                              double monthlyInterestRate, int months){
-        double futureValue=0.0;
-        for (int i = 0; i <months ; i++) {
-            futureValue=(futureValue+monthlyInvestment)*(1+monthlyInterestRate);
-
-        }
-        return futureValue;
+        System.out.println("Bye!");
     }
 }
